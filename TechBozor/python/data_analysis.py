@@ -1,9 +1,6 @@
 """
 TechBozor — Data Analytics 
 """
-import warnings
-warnings.filterwarnings("ignore")
-
 import pandas as pd
 import matplotlib
 matplotlib.use("Agg")
