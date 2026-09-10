@@ -4,7 +4,7 @@ Onlayn elektronika do'koni uchun ma'lumotlar bazasi va sotuvlar tahlili loyihasi
 PostgreSQL (relatsion ma'lumotlar), MongoDB (sharh va suhbat ma'lumotlari) va
 Python (pandas, matplotlib, seaborn) yordamida qurilgan.
 
-## 📁 Loyiha tuzilishi
+##  Loyiha tuzilishi
 
 ```
 TechBozor/
@@ -21,7 +21,6 @@ TechBozor/
 └── charts/                        ← Generatsiya qilingan grafiklar (PNG)
 ```
 
-## 🚀 Loyihani ishga tushirish
 
 ### 1. Ma'lumotlar bazasini yaratish
 ```bash
@@ -54,7 +53,7 @@ python mongodb/queries_mongo.py
 > Eslatma: agar lokal MongoDB serveri mavjud bo'lmasa, skript avtomatik ravishda
 > `mongomock` (xotiradagi simulyator) bilan ishlaydi — kod ikkalasida ham bir xil.
 
-## 📊 Loyiha haqida qisqacha
+##  Loyiha haqida qisqacha
 
 - **180** mijoz, **30** mahsulot, **~594** buyurtma (14 oylik davr, mavsumiylik bilan)
 - **300** mahsulot sharhi va **80** qo'llab-quvvatlash suhbati (MongoDB)
@@ -62,7 +61,6 @@ python mongodb/queries_mongo.py
 - Python tahlili: EDA, tavsifiy statistika (mean/median/std), oylik sotuv trendi,
   shahar va kategoriya bo'yicha sotuv, mijozlarni oddiy guruhlash
 
-## 🛠 Texnologiyalar
 
 `PostgreSQL` · `MongoDB` · `Python (pandas, matplotlib, seaborn)` · `SQL`
 
