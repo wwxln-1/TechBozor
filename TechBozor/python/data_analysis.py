@@ -26,9 +26,7 @@ orders_df = pd.read_sql("""
 
 orders_df["order_date"] = pd.to_datetime(orders_df["order_date"])
 
-print("=" * 60)
 print("1. EDA — Ma'lumotning umumiy ko'rinishi")
-print("=" * 60)
 print(orders_df.info())
 print("\nBo'sh (missing) qiymatlar:\n", orders_df.isnull().sum())
 print("\nBirinchi 5 qator:\n", orders_df.head())
