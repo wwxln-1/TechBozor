@@ -61,7 +61,4 @@ CREATE INDEX idx_orders_customer   ON orders (customer_id);
 CREATE INDEX idx_orders_date       ON orders (order_date);
 CREATE INDEX idx_products_category ON products (category_id);
 
--- ------------------------------------------------------------
--- Tuzilishni tekshirish
--- ------------------------------------------------------------
-\dt
+
