@@ -92,7 +92,7 @@ plt.close()
 
 # 5. MIJOZLARNI ODDIY GURUHLASH
 
-orders_per_customer = orders_df.groupby("customer_id")["order_id"].nunique()
+orders_per_customer = orders_df.groupby("customer_id")["order_id"].unique()
 customer_type = orders_per_customer.apply(
     lambda n: "Bir martalik mijoz" if n == 1 else "Qayta xarid qilgan mijoz"
 )
@@ -138,5 +138,5 @@ plt.tight_layout()
 plt.savefig(f"{CHARTS}/04_category_revenue.png", dpi=130)
 plt.close()
 
-print("\n✅ Barcha grafiklar saqlandi:", CHARTS)
+print("\n Barcha grafiklar saqlandi:", CHARTS)
 conn.close()
