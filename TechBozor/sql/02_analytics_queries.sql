@@ -1,14 +1,8 @@
--- ============================================================
--- TechBozor — Analitik SQL so'rovlar (JUNIOR versiya)
+-- TechBozor — Analytic SQL query
 -- Faqat asosiy SQL: SELECT, WHERE, JOIN, GROUP BY, ORDER BY, LIMIT
--- (CTE, Window Function va UPSERT olib tashlandi — bular Junior
---  daraja uchun ortiqcha murakkab, keyinroq o'rganiladi)
--- ============================================================
 
-
--- ------------------------------------------------------------
 -- 1. Har bir kategoriya bo'yicha jami sotuv va buyurtmalar soni
--- ------------------------------------------------------------
+
 SELECT
     c.category_name,
     COUNT(DISTINCT o.order_id)                 AS total_orders,
@@ -22,10 +16,8 @@ WHERE o.status = 'completed'
 GROUP BY c.category_name
 ORDER BY total_revenue DESC;
 
-
--- ------------------------------------------------------------
 -- 2. Har oy bo'yicha jami sotuv (trend uchun)
--- ------------------------------------------------------------
+
 SELECT
     DATE_TRUNC('month', o.order_date)::DATE AS month,
     SUM(oi.quantity * oi.unit_price)        AS revenue
@@ -35,11 +27,8 @@ WHERE o.status = 'completed'
 GROUP BY DATE_TRUNC('month', o.order_date)
 ORDER BY month;
 
-
--- ------------------------------------------------------------
 -- 3. Har bir mijozning nechta buyurtma bergani va jami xarajati
---    (RFM o'rniga oddiy JOIN + GROUP BY)
--- ------------------------------------------------------------
+
 SELECT
     cu.customer_id,
     cu.full_name,
@@ -55,10 +44,8 @@ ORDER BY total_spent DESC
 LIMIT 15;
 
 
--- ------------------------------------------------------------
 -- 4. Eng ko'p sotilgan Top-5 mahsulot
---    (RANK() Window Function o'rniga oddiy ORDER BY + LIMIT)
--- ------------------------------------------------------------
+
 SELECT
     p.product_name,
     SUM(oi.quantity)                 AS units_sold,
@@ -71,11 +58,8 @@ GROUP BY p.product_name
 ORDER BY units_sold DESC
 LIMIT 5;
 
-
--- ------------------------------------------------------------
 -- 5. "Bir martalik" va "qayta xarid qilgan" mijozlarni ajratish
---    (GROUP BY natijasini HAVING bilan filtrlash)
--- ------------------------------------------------------------
+
 SELECT
     cu.customer_id,
     cu.full_name,
@@ -87,11 +71,7 @@ GROUP BY cu.customer_id, cu.full_name
 HAVING COUNT(DISTINCT o.order_id) >= 5
 ORDER BY order_count DESC;
 
-
--- ------------------------------------------------------------
--- 6. Mahsulot narxini yangilash (oddiy UPDATE)
---    (ON CONFLICT/UPSERT o'rniga oddiy UPDATE ... WHERE)
--- ------------------------------------------------------------
+-- 6. Mahsulot narxini yangilash 
 UPDATE products
 SET price = 749.00,
     stock = 40
