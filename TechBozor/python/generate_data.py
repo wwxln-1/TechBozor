@@ -1,10 +1,5 @@
 """
-TechBozor uchun realistik (sintetik) ma'lumot generatsiyasi.
-Bu skript keyingi tahlil (EDA, forecasting, segmentatsiya) uchun
-haqiqiy bozor xatti-harakatiga o'xshash ma'lumot yaratadi:
-- Kunlar davomida o'sish trendi + bayram mavsumiyligi
-- Ba'zi "sodiq" mijozlar tez-tez xarid qiladi (RFM tahlili uchun)
-- Kategoriyalar bo'yicha turlicha talab
+TechBozor uchun realistik  ma'lumot generatsiyasi.
 """
 import random
 import datetime
@@ -17,7 +12,7 @@ fake = Faker()
 conn = psycopg2.connect(host="localhost", dbname="techbozor", user="postgres", password="postgres")
 cur = conn.cursor()
 
-# ---------- 1. CATEGORIES ----------
+# 1. CATEGORIES 
 categories = ["Smartfonlar", "Noutbuklar", "Aksessuarlar", "Audio texnika", "Planshetlar"]
 cur.execute("TRUNCATE order_items, orders, products, categories, customers RESTART IDENTITY CASCADE;")
 for c in categories:
@@ -27,7 +22,7 @@ conn.commit()
 cur.execute("SELECT category_id, category_name FROM categories")
 cat_map = {name: cid for cid, name in cur.fetchall()}
 
-# ---------- 2. PRODUCTS ----------
+# 2. PRODUCTS
 products_data = [
     # (name, category, price)
     ("iPhone 13", "Smartfonlar", 799.00), ("iPhone 15", "Smartfonlar", 999.00),
@@ -59,7 +54,7 @@ for i, (name, cat, price) in enumerate(products_data, start=1):
     product_ids[name] = (cur.fetchone()[0], price)
 conn.commit()
 
-# ---------- 3. CUSTOMERS ----------
+#3. CUSTOMERS 
 cities = ["Toshkent", "Samarqand", "Andijon", "Buxoro", "Namangan", "Farg'ona", "Nukus", "Qarshi"]
 NUM_CUSTOMERS = 180
 customer_ids = []
@@ -76,11 +71,11 @@ for _ in range(NUM_CUSTOMERS):
     customer_ids.append(cur.fetchone()[0])
 conn.commit()
 
-# Ba'zi mijozlarni "sodiq" (loyal) qilib belgilaymiz - ular ko'proq xarid qiladi
+# Ba'zi mijozlarni "sodiq" qilib belgilaymiz - ular ko'proq xarid qiladi
 loyal_customers = random.sample(customer_ids, 25)
 one_time_customers = random.sample([c for c in customer_ids if c not in loyal_customers], 40)
 
-# ---------- 4. ORDERS + ORDER_ITEMS ----------
+#  4. ORDERS + ORDER_ITEMS
 # 14 oylik davr: 2024-01-01 dan 2025-02-28 gacha, bayram mavsumiyligi bilan
 product_list = list(product_ids.items())
 
@@ -133,7 +128,7 @@ while current <= end:
     current += datetime.timedelta(days=1)
 
 conn.commit()
-print(f"✅ Yaratildi: {len(categories)} kategoriya, {len(products_data)} mahsulot, "
+print(f" Yaratildi: {len(categories)} kategoriya, {len(products_data)} mahsulot, "
       f"{NUM_CUSTOMERS} mijoz, {order_count} buyurtma")
 
 cur.close()
