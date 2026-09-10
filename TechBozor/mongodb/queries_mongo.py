@@ -1,5 +1,5 @@
 """
-TechBozor — MongoDB analitik so'rovlar.
+TechBozor — MongoDB 
 find/$gt/$lt, sort, pagination, update operatorlari, aggregate pipeline.
 """
 from seed_mongo import get_client, seed
@@ -16,11 +16,11 @@ def show(title, cursor_or_list):
         doc.pop("_id", None)
         print(json.loads(json_util.dumps(doc)))
 
-# 1) find + $gte — rating>=4 bo'lgan sharhlar, faqat 5 tasi
+# 1) find + $gte — rating>=4
 res = db.product_reviews.find({"rating": {"$gte": 4}}).limit(3)
 show("1) Rating >= 4 bo'lgan sharhlar (birinchi 3 ta)", res)
 
-# 2) sort + pagination (2-sahifa, page_size=5)
+# 2) sort + pagination 
 page, page_size = 2, 5
 skip = (page - 1) * page_size
 res = db.product_reviews.find().sort("rating", -1).skip(skip).limit(page_size)
@@ -32,7 +32,7 @@ if one:
     db.product_reviews.update_one({"_id": one["_id"]}, {"$set": {"verified_purchase": True}})
     print(f"\n--- 3) update_one bilan verified_purchase=True qilindi (review_id={one['review_id']}) ---")
 
-# 4) $inc bilan misol — bitta review'ga "helpful_votes" maydonini oshirish (upsert bilan)
+# 4) $inc 
 db.product_reviews.update_one(
     {"review_id": 1},
     {"$inc": {"helpful_votes": 1}},
@@ -40,7 +40,7 @@ db.product_reviews.update_one(
 )
 print("\n--- 4) $inc + upsert: review_id=1 ga helpful_votes qo'shildi ---")
 
-# 5) aggregate: $match + $group — har mahsulot bo'yicha o'rtacha reyting va sharhlar soni
+# 5) aggregate: $match + $group 
 pipeline = [
     {"$match": {"verified_purchase": True}},
     {"$group": {
@@ -56,7 +56,7 @@ print("\n--- 5) Aggregate: Top-5 mahsulot (tasdiqlangan xaridlar bo'yicha o'rtac
 for r in res:
     print(f"{r['_id']:<25} avg_rating={r['avg_rating']:.2f}  review_count={r['review_count']}")
 
-# 6) aggregate: eng ko'p uchraydigan muammo mavzulari (support_chats)
+# 6) aggregate: support_chats
 pipeline2 = [
     {"$group": {"_id": "$topic", "count": {"$sum": 1},
                 "resolved_count": {"$sum": {"$cond": ["$resolved", 1, 0]}}}},
