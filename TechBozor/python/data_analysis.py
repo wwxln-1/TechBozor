@@ -8,9 +8,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import psycopg2
 
-sns.set_theme(style="whitegrid")
-CHARTS = "/home/claude/project/charts"
-
 conn = psycopg2.connect(host="localhost", dbname="techbozor", user="postgres", password="postgres")
 
 # 1. MA'LUMOTNI YUKLASH
