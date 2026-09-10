@@ -5,7 +5,7 @@
 -- ma'lumotlar bazasi tuzilishini yaratadi.
 -- ============================================================
 
--- Eski jadvallarni tozalash (qayta ishga tushirish uchun)
+-- Eski jadvallarni tozalash 
 DROP TABLE IF EXISTS order_items CASCADE;
 DROP TABLE IF EXISTS orders CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
