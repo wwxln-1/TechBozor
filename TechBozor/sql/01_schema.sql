@@ -1,7 +1,7 @@
 -- ============================================================
 -- TechBozor — Onlayn Elektronika Do'koni Ma'lumotlar Bazasi
 -- Muallif: Mahammadjanova Gulnoza
--- Tavsif: Ushbu skript do'kon tizimining relatsion (PostgreSQL)
+-- Tavsif: Ushbu skript do'kon tizimining relatsion
 -- ma'lumotlar bazasi tuzilishini yaratadi.
 -- ============================================================
 
@@ -12,9 +12,8 @@ DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS categories CASCADE;
 DROP TABLE IF EXISTS customers CASCADE;
 
--- ------------------------------------------------------------
--- 1. CUSTOMERS — mijozlar
--- ------------------------------------------------------------
+-- 1. CUSTOMERS 
+
 CREATE TABLE customers (
     customer_id     SERIAL PRIMARY KEY,
     full_name       VARCHAR(100) NOT NULL,
@@ -23,18 +22,13 @@ CREATE TABLE customers (
     registered_at   DATE NOT NULL DEFAULT CURRENT_DATE
 );
 
--- ------------------------------------------------------------
--- 2. CATEGORIES — mahsulot toifalari
--- ------------------------------------------------------------
+-- 2. CATEGORIES 
 CREATE TABLE categories (
     category_id     SERIAL PRIMARY KEY,
     category_name   VARCHAR(50) UNIQUE NOT NULL
 );
 
--- ------------------------------------------------------------
--- 3. PRODUCTS — mahsulotlar
---    FOREIGN KEY: category_id -> categories(category_id)
--- ------------------------------------------------------------
+-- 3. PRODUCTS 
 CREATE TABLE products (
     product_id      SERIAL PRIMARY KEY,
     sku             VARCHAR(30) UNIQUE NOT NULL,   -- mahsulot kodi (UPSERT uchun)
@@ -44,10 +38,7 @@ CREATE TABLE products (
     stock           INT NOT NULL DEFAULT 0 CHECK (stock >= 0)
 );
 
--- ------------------------------------------------------------
--- 4. ORDERS — buyurtmalar (bosh jadval)
---    FOREIGN KEY: customer_id -> customers(customer_id)
--- ------------------------------------------------------------
+-- 4. ORDERS
 CREATE TABLE orders (
     order_id        SERIAL PRIMARY KEY,
     customer_id     INT NOT NULL REFERENCES customers(customer_id) ON DELETE CASCADE,
@@ -56,11 +47,7 @@ CREATE TABLE orders (
                         CHECK (status IN ('pending','completed','cancelled'))
 );
 
--- ------------------------------------------------------------
--- 5. ORDER_ITEMS — junction table (Many-to-Many: orders <-> products)
---    Bitta buyurtmada bir nechta mahsulot, bitta mahsulot
---    bir nechta buyurtmada bo'lishi mumkin.
--- ------------------------------------------------------------
+-- 5. ORDER_ITEMS — junction table 
 CREATE TABLE order_items (
     order_id        INT NOT NULL REFERENCES orders(order_id) ON DELETE CASCADE,
     product_id      INT NOT NULL REFERENCES products(product_id) ON DELETE RESTRICT,
@@ -69,10 +56,7 @@ CREATE TABLE order_items (
     PRIMARY KEY (order_id, product_id)         -- composite PRIMARY KEY
 );
 
--- ------------------------------------------------------------
--- INDEXLAR — tez-tez qidiriladigan ustunlar uchun
--- (PRIMARY KEY va UNIQUE avtomatik index oladi, qolganlariga qo'lda qo'shamiz)
--- ------------------------------------------------------------
+-- INDEX
 CREATE INDEX idx_orders_customer   ON orders (customer_id);
 CREATE INDEX idx_orders_date       ON orders (order_date);
 CREATE INDEX idx_products_category ON products (category_id);
