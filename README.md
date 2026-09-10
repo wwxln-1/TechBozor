@@ -57,7 +57,7 @@ python mongodb/queries_mongo.py
 
 - **180** mijoz, **30** mahsulot, **~594** buyurtma (14 oylik davr, mavsumiylik bilan)
 - **300** mahsulot sharhi va **80** qo'llab-quvvatlash suhbati (MongoDB)
-- SQL: JOIN, GROUP BY, HAVING, oddiy UPDATE
+- SQL: JOIN, GROUP BY, HAVING, UPDATE
 - Python tahlili: EDA, tavsifiy statistika (mean/median/std), oylik sotuv trendi,
   shahar va kategoriya bo'yicha sotuv, mijozlarni oddiy guruhlash
 
