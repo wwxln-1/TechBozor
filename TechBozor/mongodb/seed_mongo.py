@@ -1,13 +1,5 @@
 """
-TechBozor — MongoDB qismi.
-Nega MongoDB? Mahsulot sharhlari va mijozlar bilan yozishmalar
-tuzilishi har xil (ba'zi sharhda rasm bor, ba'zisida yo'q; xabarlar
-soni har bir suhbatda farq qiladi) — bu klassik semi-structured/
-unstructured holat, va relatsion jadvalga qulay sig'maydi.
-
-Bu skript avval haqiqiy MongoDB serverga ulanishga urinadi,
-topilmasa "mongomock" (xotiradagi simulyator) bilan ishlaydi —
-kod ikkalasida ham bir xil ishlaydi.
+TechBozor — MongoDB
 """
 import random
 import datetime
@@ -21,11 +13,11 @@ def get_client():
         from pymongo import MongoClient
         client = MongoClient("mongodb://localhost:27017", serverSelectionTimeoutMS=1000)
         client.server_info()  # ulanishni tekshirish
-        print("✅ Haqiqiy MongoDB serverga ulandi")
+        print(" Haqiqiy MongoDB serverga ulandi")
         return client
     except Exception:
         import mongomock
-        print("ℹ️  Haqiqiy MongoDB topilmadi — mongomock (simulyator) bilan ishlaymiz")
+        print("  Haqiqiy MongoDB topilmadi — mongomock bilan ishlaymiz")
         return mongomock.MongoClient()
 
 PRODUCTS = [
@@ -43,7 +35,7 @@ def seed(db):
     db.product_reviews.drop()
     db.support_chats.drop()
 
-    # ---------- 1. product_reviews (semi-structured) ----------
+    # 1. product_reviews (semi-structured) 
     reviews = []
     for i in range(300):
         product = random.choice(PRODUCTS)
@@ -58,13 +50,13 @@ def seed(db):
             "created_at": fake.date_time_between(start_date="-14mo", end_date="now"),
             "verified_purchase": random.choice([True, True, True, False]),
         }
-        # Ba'zi sharhlarda rasm bo'ladi, ba'zisida yo'q — semi-structured xususiyat
+    #  semi-structured 
         if random.random() < 0.3:
             doc["images"] = [f"https://cdn.techbozor.uz/reviews/{i}_{j}.jpg" for j in range(random.randint(1, 3))]
         reviews.append(doc)
     db.product_reviews.insert_many(reviews)
 
-    # ---------- 2. support_chats (unstructured-ish: xabarlar massivi) ----------
+    # 2. support_chats (unstructured)
     chats = []
     for i in range(80):
         n_messages = random.randint(2, 8)
@@ -86,7 +78,7 @@ def seed(db):
         })
     db.support_chats.insert_many(chats)
 
-    print(f"✅ MongoDB: {db.product_reviews.count_documents({})} ta sharh, "
+    print(f" MongoDB: {db.product_reviews.count_documents({})} ta sharh, "
           f"{db.support_chats.count_documents({})} ta suhbat yozuvi qo'shildi")
 
 
