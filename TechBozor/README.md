@@ -64,6 +64,6 @@ python mongodb/queries_mongo.py
 
 `PostgreSQL` · `MongoDB` · `Python (pandas, matplotlib, seaborn)` · `SQL`
 
-## ✍️ Muallif
+##  Muallif
 
-Mahammadjanova Gulnoza — PDP University, Data Analytics yo'nalishi
+Mahammadjanova Gulnoza — PDP University, Data Analytics 
