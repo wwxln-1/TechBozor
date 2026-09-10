@@ -47,7 +47,7 @@ CREATE TABLE orders (
                         CHECK (status IN ('pending','completed','cancelled'))
 );
 
--- 5. ORDER_ITEMS — junction table 
+-- 5. ORDER_ITEMS
 CREATE TABLE order_items (
     order_id        INT NOT NULL REFERENCES orders(order_id) ON DELETE CASCADE,
     product_id      INT NOT NULL REFERENCES products(product_id) ON DELETE RESTRICT,
