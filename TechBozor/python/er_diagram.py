@@ -1,4 +1,4 @@
-"""ER diagramma - TechBozor ma'lumotlar bazasi tuzilishi (soddalashtirilgan)."""
+"""ER diagramma - TechBozor """
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
