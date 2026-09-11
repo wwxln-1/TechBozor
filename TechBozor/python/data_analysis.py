@@ -33,9 +33,7 @@ print("\nBirinchi 5 qator:\n", orders_df.head())
 
 # 2. Descriptive Statistics
 
-print("\n" + "=" * 60)
 print("2. Tavsifiy statistika — order_value (buyurtma qiymati)")
-print("=" * 60)
 ov = orders_df["order_value"]
 print(f"Mean (o'rtacha)   = {ov.mean():.2f}")
 print(f"Median (mediana)  = {ov.median():.2f}")
@@ -48,10 +46,7 @@ print("\nTo'liq statistika (describe):\n", ov.describe().round(2))
 
 monthly = orders_df.groupby(orders_df["order_date"].dt.to_period("M"))["order_value"].sum()
 monthly.index = monthly.index.to_timestamp()
-
-print("\n" + "=" * 60)
 print("3. Oylik sotuv")
-print("=" * 60)
 print(monthly.round(0))
 
 plt.figure(figsize=(10, 5))
@@ -67,10 +62,7 @@ plt.close()
 # 4. SHAHARLAR BO'YICHA SOTUV
 
 by_city = orders_df.groupby("city")["order_value"].sum().sort_values(ascending=False)
-
-print("\n" + "=" * 60)
 print("4. Shaharlar bo'yicha jami sotuv")
-print("=" * 60)
 print(by_city.round(0))
 
 plt.figure(figsize=(8, 5))
@@ -89,9 +81,7 @@ customer_type = orders_per_customer.apply(
     lambda n: "Bir martalik mijoz" if n == 1 else "Qayta xarid qilgan mijoz"
 )
 
-print("\n" + "=" * 60)
 print("5. Mijozlar guruhlari")
-print("=" * 60)
 print(customer_type.value_counts())
 
 plt.figure(figsize=(6, 5))
@@ -116,9 +106,7 @@ cat_df = pd.read_sql("""
     ORDER BY revenue DESC
 """, conn)
 
-print("\n" + "=" * 60)
 print("6. Kategoriya bo'yicha jami sotuv")
-print("=" * 60)
 print(cat_df)
 
 plt.figure(figsize=(8, 5))
