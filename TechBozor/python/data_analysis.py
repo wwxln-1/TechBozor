@@ -33,7 +33,7 @@ print("\nBirinchi 5 qator:\n", orders_df.head())
 
 # 2. Descriptive Statistics
 
-print("2. Tavsifiy statistika — order_value (buyurtma qiymati)")
+print("2.Descriptive statistic")
 ov = orders_df["order_value"]
 print(f"Mean (o'rtacha)   = {ov.mean():.2f}")
 print(f"Median (mediana)  = {ov.median():.2f}")
